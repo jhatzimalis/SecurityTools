@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurityTools Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        :root {
+            --bg-color-light: #f4f4f9;
+            --bg-color-dark: #2e2e2e;
+            --text-color-light: #333;
+            --text-color-dark: #ccc;
+        }
+        body.light-mode {
+            --bg-color: var(--bg-color-light);
+            --text-color: var(--text-color-light);
+        }
+        body.dark-mode {
+            --bg-color: var(--bg-color-dark);
+            --text-color: var(--text-color-dark);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--bg-color);
+        }
+        .theme-toggle {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .theme-toggle:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .tile {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .tile:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .tile span {
+            display: block;
+            margin-top: 0.5rem;
+        }
+        .ip-input-section {
+            padding: 1rem;
+            text-align: center;
+        }
+        .ip-input-section input, .ip-input-section button {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            font-size: 1rem;
+        }
+        .ip-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .ip-links a {
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .ip-links a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <header>
+        <h1>SecurityTools Dashboard</h1>
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+    </header>
+    <div class="container">
+        <a href="https://jhatzimalis.github.io" class="tile">
+            <img src="img/dock.png" alt="Home" width="50" height="50">
+            <span>Home Page</span>
+        </a>
+        <a href="pages/iposint.html" class="tile">
+            <img src="img/iposint.jpg" alt="Tool 2" width="50" height="50">
+            <span>IP OSINT</span>
+        </a>
+        <!-- Add more tiles as needed -->
+    </div>
+    <div class="ip-input-section">
+        <input type="text" id="ipInput" placeholder="Enter IP address">
+        <div class="ip-links">
+            <a href="#" id="abuseipdb-link" target="_blank">AbuseIPDB</a>
+            <a href="#" id="ipqualityscore-link" target="_blank">IPQualityScore</a>
+            <a href="#" id="virustotal-link" target="_blank">VirusTotal</a>
+            <a href="#" id="whois-link" target="_blank">Whois</a>
+            <button onclick="openAll()">Open All</button>
+        </div>
+    </div>
+    <script>
+        function updateLinks() {
+            var ip = document.getElementById('ipInput').value;
+            document.getElementById('abuseipdb-link').href = ip ? 'https://www.abuseipdb.com/check/' + ip : 'https://www.abuseipdb.com/';
+            document.getElementById('ipqualityscore-link').href = ip ? 'https://www.ipqualityscore.com/free-ip-lookup-proxy-vpn-test/lookup/' + ip : 'https://www.ipqualityscore.com/free-ip-lookup-proxy-vpn-test/';
+            document.getElementById('virustotal-link').href = ip ? 'https://www.virustotal.com/gui/ip-address/' + ip : 'https://www.virustotal.com/gui/home/search';
+            document.getElementById('whois-link').href = ip ? 'https://www.whois.com/whois/' + ip : 'https://www.whois.com/whois/';
+        }
+
+        function openAll() {
+            var links = document.querySelectorAll('.ip-links a');
+            links.forEach(link => {
+                window.open(link.href, '_blank');
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+        }
+
+        document.getElementById('ipInput').addEventListener('input', updateLinks);
+    </script>
+</body>
+</html>
